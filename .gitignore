@@ -1,0 +1,17 @@
+.env
+tekser_session.session
+tekser_session.session-journal
+
+# Python мусор
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Виртуальное окружение
+venv/
+env/
+ENV/
+
+# Логи
+*.log
