@@ -2,13 +2,13 @@ name: Tekser Daily Aggregator
 
 on:
   schedule:
-    - cron: '0 2 * * *' # Запуск каждый день в 02:00 UTC (07:00 по Астане)
-  workflow_dispatch:     # Кнопка для ручного запуска в интерфейсе GitHub
+    - cron: '0 2 * * *'
+  workflow_dispatch:
 
 jobs:
   scrape-and-load:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.11'
           cache: 'pip'
 
       - name: Install dependencies
@@ -26,4 +26,9 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SCRAPER_URLS: ${{ secrets.SCRAPER_URLS }}
+          SCRAPER_PAGES: ${{ vars.SCRAPER_PAGES }}
+          TG_PUBLIC_CHANNELS: ${{ secrets.TG_PUBLIC_CHANNELS }}
+          WRITE_REPORTS: ${{ vars.WRITE_REPORTS }}
+          DAILY_REPORT_DEDUP: ${{ vars.DAILY_REPORT_DEDUP }}
         run: python src/main.py
